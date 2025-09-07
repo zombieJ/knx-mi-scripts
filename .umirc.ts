@@ -5,7 +5,7 @@ export default defineConfig({
     { path: "/", component: "index" },
   ],
   npmClient: "cnpm",
-  base: "/knx_mi_scripts/",
-  publicPath: "/knx_mi_scripts/",
+  base: "/knx-mi-scripts/",
+  publicPath: "/knx-mi-scripts/",
   targets: { chrome: 67 },
 });
