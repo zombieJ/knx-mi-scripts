@@ -23,7 +23,7 @@ import {
 export default function HomePage() {
   const { modal } = App.useApp();
   const [form] = Form.useForm();
-  const [scriptText, setScriptText] = useState("helloWorld");
+  const [scriptText, setScriptText] = useState("");
 
   // 页面加载时从 localStorage 读取数据
   useEffect(() => {
