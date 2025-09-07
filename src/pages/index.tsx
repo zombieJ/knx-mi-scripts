@@ -162,7 +162,7 @@ export default function HomePage() {
             {(fields, { add, remove }) => (
               <>
                 {fields.map(({ key, name, ...restField }) => (
-                  <Flex key={key} align="center" gap={8}>
+                  <Flex key={key} align="flex-start" gap={8}>
                     <Form.Item
                       {...restField}
                       name={[name, "knxSwitchName"]}
@@ -198,6 +198,9 @@ export default function HomePage() {
                     >
                       <Input placeholder="小米开关ID" />
                     </Form.Item>
+                    <Button onClick={() => remove(name)} type="primary" danger>
+                      删除
+                    </Button>
                   </Flex>
                 ))}
                 <Button type="dashed" onClick={() => add()} block>
