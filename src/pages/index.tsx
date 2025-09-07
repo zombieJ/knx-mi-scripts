@@ -27,28 +27,32 @@ export default function HomePage() {
 
   // 页面加载时从 localStorage 读取数据
   useEffect(() => {
-    const savedData = localStorage.getItem('knxMiFormValues');
+    const savedData = localStorage.getItem("knxMiFormValues");
     if (savedData) {
       try {
         const parsedData = JSON.parse(savedData);
         form.setFieldsValue(parsedData);
       } catch (e) {
-        console.error('Failed to parse localStorage data', e);
+        console.error("Failed to parse localStorage data", e);
       }
     }
   }, [form]);
 
   // 表单值改变时保存到 localStorage
   const handleValuesChange = (changedValues: any, allValues: any) => {
-    localStorage.setItem('knxMiFormValues', JSON.stringify(allValues));
+    localStorage.setItem("knxMiFormValues", JSON.stringify(allValues));
   };
 
   const onInternalFinish = (allValues: any) => {
     // 检查是否有数据
-    if (!allValues.items || !Array.isArray(allValues.items) || allValues.items.length === 0) {
+    if (
+      !allValues.items ||
+      !Array.isArray(allValues.items) ||
+      allValues.items.length === 0
+    ) {
       modal.info({
-        title: '提示',
-        content: '至少需要添加一组 KNX/小米 开关的映射关系',
+        title: "提示",
+        content: "至少需要添加一组 KNX/小米 开关的映射关系",
       });
       return;
     }
@@ -62,7 +66,13 @@ export default function HomePage() {
       allValues.items.forEach((item: any) => {
         if (item && item.knxSwitchId && item.miSwitchId) {
           // 添加备注行，注明是哪个 KNX 和小米开关的
-          scripts.push(`##### KNX: ${item.knxSwitchName || "默认房间"} (${item.knxSwitchId}) -> 小米: ${item.miSwitchName || "默认房间"} (${item.miDeviceId}.${item.miSwitchId})`);
+          scripts.push(
+            `##### KNX: ${item.knxSwitchName || "默认房间"} (${
+              item.knxSwitchId
+            }) -> 小米: ${item.miSwitchName || "默认房间"} (${
+              item.miDeviceId
+            }.${item.miSwitchId})`
+          );
           scripts.push(
             generateScript(
               OPEN_KNX_2_MI,
@@ -130,8 +140,14 @@ export default function HomePage() {
               </li>
               <li>
                 设备 ID 在：<strong>设置 - 设备与服务 - 设备</strong>{" "}
-                中查看。点开设备后，点击 <strong>信息</strong>，在弹窗右上角点击 <strong>设置</strong>{" "}
-                按钮，复制 <strong>实体标识符</strong>
+                中查看。点开设备后，点击 <strong>信息</strong>，在弹窗右上角点击{" "}
+                <strong>设置</strong> 按钮，复制 <strong>实体标识符</strong>
+              </li>
+              <li>
+                <Typography.Text strong type="danger">
+                  备份
+                </Typography.Text>{" "}
+                automations.yaml 文件，将生成的脚本覆盖该文件
               </li>
             </ul>
           </pre>
